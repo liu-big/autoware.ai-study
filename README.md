@@ -3,8 +3,9 @@
 > 基于 [Autoware.ai](https://github.com/Autoware-AI/autoware.ai) 的低速自动驾驶完整软件系统。  
 > 在开源 Autoware 之上完成 **传感接入 → SLAM 建图 → NDT 定位 → 感知 → 规划 → 控制 → CAN 线控** 全链路实车闭环。
 
-**维护者：** 2715209705@qq.com  
-**仓库属性：** 私有（Private），仅仓库所有者可访问与贡献  
+**维护者：** [liu-big](https://github.com/liu-big)（2715209705@qq.com）  
+**仓库属性：** 私有（Private），仅所有者可访问与贡献，不添加外部 Collaborator  
+**目标仓库：** `https://github.com/liu-big/autoware.ai-ant`（创建后以实际 URL 为准）  
 **构建方式：** colcon（ROS Melodic）  
 **主语言：** C++ / Python / Launch / YAML
 
