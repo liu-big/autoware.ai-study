@@ -5,7 +5,7 @@
 
 **维护者：** [liu-big](https://github.com/liu-big)（2715209705@qq.com）  
 **仓库属性：** 私有（Private），仅所有者可访问与贡献，不添加外部 Collaborator  
-**目标仓库：** `https://github.com/liu-big/autoware.ai-ant`（创建后以实际 URL 为准）  
+**目标仓库：** https://github.com/liu-big/autoware.ai-study  
 **构建方式：** colcon（ROS Melodic）  
 **主语言：** C++ / Python / Launch / YAML
 
