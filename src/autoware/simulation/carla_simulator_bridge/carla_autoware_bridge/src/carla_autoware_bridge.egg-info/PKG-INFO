@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: carla_autoware_bridge
+Version: 0.0.0
+Summary: The carla_autoware_bridge package
+Author: 
+Maintainer: CARLA Simulator Team
+Maintainer-email: carla.simulator@gmail.com
+License: MIT

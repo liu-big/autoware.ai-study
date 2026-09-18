@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: nmea_navsat_driver
+Version: 0.5.2
+Summary: Package to parse NMEA strings and publish a very simple GPS message. Does not require or use the GPSD deamon.
+Home-page: http://ros.org/wiki/nmea_navsat_driver
+Author: Eric Perko <eric@ericperko.com>, Steven Martin
+Maintainer: Ed Venator
+Maintainer-email: evenator@gmail.com
+License: BSD

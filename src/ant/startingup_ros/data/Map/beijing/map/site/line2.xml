@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testtable>
+    <row>
+        <col>1</col>
+        <col>终点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-106.205</X>
+        <Y>82.2843</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.98121</orie_Z>
+        <orie_W>-0.192941</orie_W>
+    </row>
+    <row>
+        <col>14</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>2.67238</X>
+        <Y>-71.5021</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.188538</orie_Z>
+        <orie_W>0.982066</orie_W>
+    </row>
+    <row>
+        <col>8</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>84.8014</X>
+        <Y>-53.0715</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.689683</orie_Z>
+        <orie_W>0.724112</orie_W>
+    </row>
+    <row>
+        <col>9</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>87.248</X>
+        <Y>47.6435</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.67623</orie_Z>
+        <orie_W>0.736691</orie_W>
+    </row>
+    <row>
+        <col>10</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>48.7064</X>
+        <Y>80.8171</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.990576</orie_Z>
+        <orie_W>-0.136964</orie_W>
+    </row>
+    <row>
+        <col>11</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-50.914</X>
+        <Y>84.1228</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.994321</orie_Z>
+        <orie_W>-0.10642</orie_W>
+    </row>
+</testtable>

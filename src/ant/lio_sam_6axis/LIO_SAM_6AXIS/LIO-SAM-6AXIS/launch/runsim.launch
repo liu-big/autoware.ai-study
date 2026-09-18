@@ -1,0 +1,45 @@
+<launch>
+
+    <!-- <include file="$(find imu_conversion)/launch/imu_conversion.launch"/> -->
+    <!--imu与GPS的转换 对应华测惯导-->
+
+    <!-- <arg name="use_bag" default="true"/> -->
+    <!--是否离线使用数据包建图-->
+    <arg name="project" default="lio_sam_6axis"/>
+    <!-- <arg name="bag_path" default="$(find startingup_ros)/data/Common/bag/build_pcd_data.bag"/> -->
+    <!--数据包位置-->
+    <arg name="sequence" default="pointcloud_map"/><!--地图保存位置-->
+    <arg name="useGPS" default="false"/><!--是否使用GPS-->
+    <arg name="filt" default="0.2"/><!--地图降采样-->
+
+    <!-- Parameters -->
+    <!--    <rosparam file="$(find lio_sam_6axis)/config/params_ouster.yaml" command="load"/>-->
+
+    <rosparam file="$(find lio_sam_6axis)/config/params_vlpsim.yaml" command="load"/>
+    <param name="lio_sam_6axis/useGPS" value="$(arg useGPS)"/><!--是否使用GPS-->
+    <param name="lio_sam_6axis/globalMapLeafSize" value="$(arg filt)"/><!--地图降采样-->
+
+    <!--- LOAM -->
+    <param name="saveDirectory" type="string" value="$(find startingup_ros)/data/Common/map/"/><!--地图保存位置-->
+    <param name="configDirectory" type="string" value="$(find lio_sam_6axis)/config/"/>
+    <rosparam param="sequence" subst_value="true">$(arg sequence)</rosparam>
+
+    <include file="$(find lio_sam_6axis)/launch/include/module_loam.launch"/>
+
+    <!--- Robot State TF -->
+    <include file="$(find lio_sam_6axis)/launch/include/module_robot_state_publisher.launch"/>
+
+    <!--- Run Navsat -->
+    <node pkg="lio_sam_6axis" type="lio_sam_6axis_gpsOdometry" name="lio_sam_6axis_gpsOdometry"/>
+
+    <!--- Run Rviz-->
+    <node pkg="rviz" type="rviz" name="$(arg project)_rviz"
+          args="-d $(find lio_sam_6axis)/launch/include/config/vlp.rviz"/>
+
+    <!-- <group if="$(arg use_bag)">
+        <node pkg="rosbag" type="play" name="rosbag_play" args=" -r 2.0
+        $(arg bag_path)"/>
+    </group> -->
+
+
+</launch>

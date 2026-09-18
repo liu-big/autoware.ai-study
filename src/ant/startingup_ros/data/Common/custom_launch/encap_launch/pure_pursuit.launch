@@ -1,0 +1,36 @@
+<launch>
+    <arg name="lookahead_ratio" default="2.0"/>                                         <!-- 转为半径 (Waypoint)-->
+    <arg name="minimum_lookahead_distance" default="6.0"/>           <!-- 前视距离 (Waypoint) +速度 -->
+    <arg name="param_flag" default="0"/> 
+    <arg name="velocity" default="10"/>
+
+    <!-- pure_pursuit , 发布话题数据,话题名为 /config/waypoint_follower-->
+    <node pkg="rostopic" type="rostopic" name="config_waypoint_follower_rostopic"
+        args="pub -l /config/waypoint_follower autoware_config_msgs/ConfigWaypointFollower
+        '{header: auto,
+            param_flag: $(arg param_flag),
+            velocity: $(arg velocity),
+            lookahead_distance: 6.0,
+            lookahead_ratio: 1.5,
+            minimum_lookahead_distance: 6.0,
+            displacement_threshold: 0.0,
+            relative_angle_threshold: 0.0,
+        }' "
+    />
+    <include file="$(find pure_pursuit)/launch/pure_pursuit.launch">
+            <arg name="const_lookahead_distance" value="4.0"/>                   <!-- 前视距离( Dialog) -->
+            <arg name="const_velocity" value="5.0"/>                                             <!-- 恒定速度 ( Dialog)-->
+            <arg name="angular_multiple" value="2.0"/>          <!-- 转角倍数，针对仿真设置2-->
+
+            <arg name="lookahead_ratio" value="$(arg lookahead_ratio)"/>                                         <!-- 转为半径 (Waypoint)-->
+            <arg name="minimum_lookahead_distance" value="$(arg minimum_lookahead_distance)"/>           <!-- 前视距离 (Waypoint) +速度 -->
+
+
+            <arg name="is_linear_interpolation" value="True"/>                      <!-- 是线性插值 -->
+            <arg name="publishes_for_steering_robot" value="True"/>         <!-- 发布转向机器人 -->
+            <arg name="add_virtual_end_waypoints" value="False"/>           <!-- 添加虚拟终点航点 -->
+
+            <arg name="velocity_source" value="0"/>                                                 <!-- 0 = 航点，1 = 提供恒定速度 -->
+    </include>
+
+</launch>

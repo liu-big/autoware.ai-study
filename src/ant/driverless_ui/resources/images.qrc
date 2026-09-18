@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/Camera.png</file>
+        <file>images/icon.png</file>
+        <file>images/LaserScan.png</file>
+        <file>images/Marker.png</file>
+        <file>images/MarkerArray.png</file>
+        <file>images/options.png</file>
+        <file>images/Path.png</file>
+        <file>images/power-v.png</file>
+        <file>images/RobotModel.png</file>
+        <file>images/Sensor.png</file>
+        <file>images/control.png</file>
+        <file>images/can.png</file>
+        <file>images/detect.png</file>
+        <file>images/Local.png</file>
+        <file>images/delet.png</file>
+        <file>images/goal.png</file>
+        <file>images/lane.png</file>
+        <file>images/pcd.png</file>
+        <file>images/makePath.png</file>
+        <file>images/pathTrack.png</file>
+        <file>images/autoDrive.png</file>
+        <file>images/record.png</file>
+        <file>images/map.png</file>
+        <file>images/line.png</file>
+        <file>images/car.png</file>
+        <file>images/um.png</file>
+        <file>images/mm.png</file>
+        <file>images/lidar.png</file>
+        <file>images/imu.png</file>
+        <file>images/rviz.png</file>
+        <file>images/vehicle.png</file>
+        <file>images/canhe.png</file>
+    </qresource>
+</RCC>

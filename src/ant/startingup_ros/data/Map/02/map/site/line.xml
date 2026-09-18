@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testtable>
+    <row>
+        <col>1</col>
+        <col>终点</col>
+        <col>时间  15S</col>
+        <col>时间  15S</col>
+        <col>删除</col>
+        <Time>15</Time>
+        <X>1.10054</X>
+        <Y>1.32036</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>-0.0350096</orie_Z>
+        <orie_W>0.999387</orie_W>
+    </row>
+    <row>
+        <col>3</col>
+        <col>停靠点</col>
+        <col>时间  15S</col>
+        <col>时间  15S</col>
+        <col>删除</col>
+        <Time>15</Time>
+        <X>-24.8476</X>
+        <Y>43.9226</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.981796</orie_Z>
+        <orie_W>0.189937</orie_W>
+    </row>
+</testtable>

@@ -1,0 +1,57 @@
+<launch>
+    <arg name="points_parent_src" default="/lidar16_3/points_raw" />
+    <arg name="points_child_src" default="/lidar16_2/points_raw" />
+    <arg name="parent_frame_id" default="/lidar3_link" />
+    <arg name="child_frame_id" default="/lidar2_link" />
+    <arg name="x" default="0.35" />
+    <arg name="y" default="0.55" />
+    <arg name="z" default="-1.05" />
+    <arg name="yaw" default="0.785" />
+    <arg name="pitch" default="0" />
+    <arg name="roll" default="0.0" />
+
+    <!-- <arg name="points_parent_src" default="/lidar16_3/points_raw" />
+    <arg name="points_child_src" default="/lidar16_1/points_raw" />
+    <arg name="parent_frame_id" default="/lidar3_link" />
+    <arg name="child_frame_id" default="/lidar1_link" />
+    <arg name="x" default="-1.60" />
+    <arg name="y" default="-0.55" />
+    <arg name="z" default="-1.05" />
+    <arg name="yaw" default="-2.382" />
+    <arg name="pitch" default="0" />
+    <arg name="roll" default="0.0" /> -->
+
+    <arg name="voxel_size" default="1.0" />
+    <arg name="ndt_epsilon" default="0.01" />
+    <arg name="ndt_step_size" default="0.1" />
+    <arg name="ndt_resolution" default="1.0" />
+    <arg name="ndt_iterations" default="400" />
+
+    <node pkg="multi_lidar_calibrator" type="multi_lidar_calibrator" name="lidar_calibrator" output="screen">
+        <param name="points_parent_src" value="$(arg points_parent_src)" />
+        <param name="points_child_src" value="$(arg points_child_src)" />
+        <param name="voxel_size" value="$(arg voxel_size)" />
+        <param name="ndt_epsilon" value="$(arg ndt_epsilon)" />
+        <param name="ndt_step_size" value="$(arg ndt_step_size)" />
+        <param name="ndt_resolution" value="$(arg ndt_resolution)" />
+        <param name="ndt_iterations" value="$(arg ndt_iterations)" />
+        <param name="x" value="$(arg x)" />
+        <param name="y" value="$(arg y)" />
+        <param name="z" value="$(arg z)" />
+        <param name="roll" value="$(arg roll)" />
+        <param name="pitch" value="$(arg pitch)" />
+        <param name="yaw" value="$(arg yaw)" />
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="child_parent_link" args="$(arg x) $(arg y) $(arg z) $(arg yaw)  $(arg pitch) $(arg roll)  $(arg parent_frame_id)  $(arg child_frame_id)  10" />
+
+    <include file="$(find lslidar_c16_decoder)/launch/lslidar_c16_mult.launch">
+        <arg name="device1_ip" value="192.168.86.200"/>
+        <arg name="device2_ip" value="192.168.86.201"/>
+        <arg name="device3_ip" value="192.168.86.202"/>
+    </include>
+
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/ant/.rviz/calibrated.rviz"/>
+
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find vehicle_socket)/launch/vehicle_socket_can.launch">
+    <arg name="vehicle_type" value="$(env AUTOCAR_VEHICLE_TYPE)" />
+  </include>
+</launch>

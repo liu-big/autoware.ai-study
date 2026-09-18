@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testtable>
+    <row>
+        <col>1</col>
+        <col>终点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-106.205</X>
+        <Y>82.2843</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.98121</orie_Z>
+        <orie_W>-0.192941</orie_W>
+    </row>
+    <row>
+        <col>12</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-42.2665</X>
+        <Y>-2.07409</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.707107</orie_Z>
+        <orie_W>0.707107</orie_W>
+    </row>
+    <row>
+        <col>13</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>39.3461</X>
+        <Y>-4.5472</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.699883</orie_Z>
+        <orie_W>0.714258</orie_W>
+    </row>
+    <row>
+        <col>19</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>167.382</X>
+        <Y>-53.979</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.67623</orie_Z>
+        <orie_W>0.736691</orie_W>
+    </row>
+    <row>
+        <col>7</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>126.122</X>
+        <Y>-116.947</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>0.188538</orie_Z>
+        <orie_W>0.982066</orie_W>
+    </row>
+    <row>
+        <col>15</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-6.69365</X>
+        <Y>-118.502</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>-0.663721</orie_Z>
+        <orie_W>0.74798</orie_W>
+    </row>
+    <row>
+        <col>3</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-84.0556</X>
+        <Y>-26.5452</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>-0.663721</orie_Z>
+        <orie_W>0.74798</orie_W>
+    </row>
+    <row>
+        <col>2</col>
+        <col>停靠点</col>
+        <col>时间  30S</col>
+        <col>时间  30S</col>
+        <col>删除</col>
+        <Time>30</Time>
+        <X>-82.1548</X>
+        <Y>47.4273</Y>
+        <Z>0</Z>
+        <orie_X>0</orie_X>
+        <orie_Y>0</orie_Y>
+        <orie_Z>-0.701284</orie_Z>
+        <orie_W>0.712882</orie_W>
+    </row>
+</testtable>

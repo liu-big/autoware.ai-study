@@ -1,0 +1,56 @@
+# 编译产物
+build/
+install/
+devel/
+log/
+logs/
+.catkin_tools/
+.catkin_workspace
+
+# 压缩包与备份
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+can_client.zip
+src-*.zip
+
+# ROS bag / 点云大数据（体积过大，不上传）
+*.bag
+*.bag.active
+*.pcd
+*.ply
+*.las
+
+# IDE / 系统
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# 本地环境
+.env
+*.log
+core
+*.so
+*.a
+*.o
+*.user
+CMakeCache.txt
+CMakeFiles/
+
+# Python / conda
+.venv/
+venv/
+
+# 临时
+*.bak
+*.tmp

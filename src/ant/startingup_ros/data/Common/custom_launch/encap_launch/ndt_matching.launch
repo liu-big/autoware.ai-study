@@ -1,0 +1,71 @@
+<launch>
+      <!--init pose-->
+      <!-- <node pkg="rostopic" type="rostopic" name="config_initialpose"
+		    args="pub /initialpose geometry_msgs/PoseWithCovarianceStamped
+          '{header: auto,
+            header:{frame_id: map},
+            pose:{
+                pose:{
+                    position: {
+                        x: 0,
+                        y: 0, 
+                        z: 0.0
+                    },
+                    orientation:
+                     {
+                        x: 0,
+                        y: 0, 
+                        z: 0,
+                        w: 0
+                      }
+                },
+                covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            }
+            }' "
+    /> -->
+  <arg name="init_pos_gnss" default="1" />   <!--初始化gnss位置-->
+
+  <arg name="get_height" default="1" /><!--是否获取高度-->
+  <arg name="method_type" default="0" /><!--使用类型-->
+  <arg name="use_imu" default="0" /><!--是否使用IMU-->
+  <arg name="use_gnss" default="1" /><!--是否使用GNSS-->
+  <arg name="gnss_reinit_fitness" default="5" />
+
+<!-- /config/voxel_grid_filter -->
+  <node pkg="rostopic" type="rostopic" name="config_voxel_grid_filter"
+		    args="pub -l /config/voxel_grid_filter autoware_config_msgs/ConfigVoxelGridFilter
+          '{voxel_leaf_size: 1.4,
+          measurement_range: 100.0}' "
+    />
+
+    <!-- ndt_matching -->
+  <node pkg="rostopic" type="rostopic" name="config_ndt_matching"
+		    args="pub -l /config/ndt autoware_config_msgs/ConfigNDT
+          '{header: auto,
+            init_pos_gnss: $(arg init_pos_gnss),
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+            roll: 0.0,
+            pitch: 0.0,
+            yaw: 0.0,
+            use_predict_pose: 0,
+            error_threshold: 1.0,
+            resolution: 1.0,
+            step_size: 0.10000000149,
+            trans_epsilon: 0.00999999977648,
+            max_iterations: 30}' "
+  />
+
+  <!-- ndt_matching /config/ndt -->
+  <include file="$(find lidar_localizer)/launch/ndt_matching.launch">
+    <arg name="get_height" value="$(arg get_height)" />
+    <arg name="method_type" value="$(arg method_type)" />                                  <!--modify [default: 0]-->
+    <arg name="use_imu" value="$(arg use_imu)" />                                       <!--modify [default: false]-->
+    <arg name="use_gnss" value="$(arg use_gnss)" />
+    <arg name="imu_topic" value="/imu_raw" />
+    <arg name="gnss_reinit_fitness" value="$(arg gnss_reinit_fitness)" />
+    <arg name="output_log_data" value="False" />
+  </include>
+
+</launch>

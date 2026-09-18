@@ -1,0 +1,10 @@
+
+<launch>
+<arg name="Date" default="0"/>
+  <node pkg="rostopic" type="rostopic" name="config_ndt_mapping_output"
+		    args="pub -l /config/ndt_mapping_output autoware_config_msgs/ConfigNDTMappingOutput 
+          '{header: auto,
+            filename: $(find startingup_ros)/data/Common/map/pointcloud_map/lidar_match-$(arg Date).pcd,
+            filter_res: 0.20000000298}' -1"
+  />
+</launch>

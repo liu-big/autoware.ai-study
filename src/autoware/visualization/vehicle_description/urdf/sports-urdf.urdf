@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="sports-urdf">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.61017 0.0012296 0.43395"
+        rpy="0 0 0" />
+      <mass
+        value="32.256" />
+      <inertia
+        ixx="1.2257"
+        ixy="0.001212"
+        ixz="0.0076635"
+        iyy="2.8119"
+        iyz="0.00028458"
+        izz="3.6795" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="velodyne">
+    <inertial>
+      <origin
+        xyz="5.4968E-05 -1.5385E-05 -0.0042813"
+        rpy="0 0 0" />
+      <mass
+        value="0.10243" />
+      <inertia
+        ixx="0.00011195"
+        ixy="1.2155E-07"
+        ixz="-1.0117E-07"
+        iyy="0.00011061"
+        iyz="3.2354E-08"
+        izz="0.00020477" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.39 0 -1.12"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/velodyne.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/velodyne.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="velodyne_Link"
+    type="fixed">
+    <origin
+      xyz="0.80931 -2.3103E-05 0.87813"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="velodyne" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.020074 0.00018969 0.1291"
+        rpy="0 0 0" />
+      <mass
+        value="16.086" />
+      <inertia
+        ixx="0.095149"
+        ixy="3.1801E-08"
+        ixz="4.3901E-07"
+        iyy="0.14729"
+        iyz="2.4395E-08"
+        izz="0.095139" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.098 0.098 0.44 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_Link"
+    type="fixed">
+    <origin
+      xyz="0.76639 -2.3103E-05 0.37993"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="vehicle_mode_link">
+    <inertial>
+      <origin
+        xyz="-0.58938 0.00087212 0.35639"
+        rpy="0 0 0" />
+      <mass
+        value="5.8444" />
+      <inertia
+        ixx="0.16809"
+        ixy="4.3152E-05"
+        ixz="-0.01962"
+        iyy="0.073985"
+        iyz="-3.4047E-05"
+        izz="0.21204" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/vehicle_mode_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.7 0.13 0.13 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/vehicle_mode_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="vehicle_mode_Link"
+    type="fixed">
+    <origin
+      xyz="0.76639 -2.3103E-05 0.37993"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="vehicle_mode_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

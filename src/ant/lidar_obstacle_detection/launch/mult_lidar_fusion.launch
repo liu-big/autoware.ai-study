@@ -1,0 +1,73 @@
+<launch>
+
+    <arg name="type" default="2" />
+    <arg name="parent_frame" default="velodyne" />
+    <arg name="points_parent_src" default="/lidar16_1/points_raw" />
+    <arg name="points_child_one" default="/lidar16_2/points_raw" />
+    <arg name="points_child_two" default="/lidar16_3/points_raw" />
+    <arg name="out_points_cloud" default="/points_raw" />
+
+    <arg name="one_x" default="2.33822" />
+    <arg name="one_y" default="0.0375561" />
+    <arg name="one_z" default="-1.26216" />
+    <arg name="one_yaw" default="0.0" />
+    <arg name="one_pitch" default="0.0" />
+    <arg name="one_roll" default="0.0" />
+
+    <arg name="two_x" default="0" />
+    <arg name="two_y" default="0" />
+    <arg name="two_z" default="0" />
+    <arg name="two_yaw" default="0" />
+    <arg name="two_pitch" default="0.0" />
+    <arg name="two_roll" default="0.0" />
+    
+    <arg name="parent_filter_enable" default="0" />
+    <arg name="parent_min_angle" default="0.0" />
+    <arg name="parent_max_angle" default="0.0" />
+    <arg name="one_filter_enable" default="0" />
+    <arg name="one_min_angle" default="0.0" />
+    <arg name="one_max_angle" default="0.0" />
+    <arg name="two_filter_enable" default="1" />
+    <arg name="two_min_angle" default="137.0" />
+    <arg name="two_max_angle" default="224.0" />
+
+
+    <node pkg="lidar_obstacle_detection" name="lidar_fusion" type="lidar_fusion" output="screen">
+        <param name="parent_frame" value="$(arg parent_frame)" />
+        <param name="points_parent_src" value="$(arg points_parent_src)" />
+        <param name="points_child_one" value="$(arg points_child_one)" />
+        <param name="points_child_two" value="$(arg points_child_two)" />
+        <param name="out_points_cloud" value="$(arg out_points_cloud)" />
+        <param name="type" value="$(arg type)" />
+
+        <param name="parent_filter_enable" value="$(arg parent_filter_enable)" />
+        <param name="parent_min_angle" value="$(arg parent_min_angle)" />
+        <param name="parent_max_angle" value="$(arg parent_max_angle)" />
+        <param name="one_filter_enable" value="$(arg one_filter_enable)" />
+        <param name="one_min_angle" value="$(arg one_min_angle)" />
+        <param name="one_max_angle" value="$(arg one_max_angle)" />
+        <param name="two_filter_enable" value="$(arg two_filter_enable)" />
+        <param name="two_min_angle" value="$(arg two_min_angle)" />
+        <param name="two_max_angle" value="$(arg two_max_angle)" />
+
+
+        <param name="one_x" value="$(arg one_x)" />
+        <param name="one_y" value="$(arg one_y)" />
+        <param name="one_z" value="$(arg one_z)" />
+        <param name="one_yaw" value="$(arg one_yaw)" />
+        <param name="one_pitch" value="$(arg one_pitch)" />
+        <param name="one_roll" value="$(arg one_roll)" />
+
+        <param name="two_x" value="$(arg two_x)" />
+        <param name="two_y" value="$(arg two_y)" />
+        <param name="two_z" value="$(arg two_z)" />
+        <param name="two_yaw" value="$(arg two_yaw)" />
+        <param name="two_pitch" value="$(arg two_pitch)" />
+        <param name="two_roll" value="$(arg two_roll)" />
+    </node>
+
+
+	<!-- 后轴中心到激光雷达的位置 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="lidar_link" args="1.200 0 2.091 0 0 0 base_link velodyne 10" /> -->
+
+</launch>

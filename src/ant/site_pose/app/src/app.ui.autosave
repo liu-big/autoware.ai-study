@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VizlibTest</class>
+ <widget class="QWidget" name="VizlibTest">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1543</width>
+    <height>878</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>VizlibTest</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,1">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_build_map_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QGraphicsView" name="mapViz_2">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QGraphicsView{
+border-top: 5px solid qlineargradient(y0:0, y1:1,stop: 0 #ececef, stop: 1 white);
+border-left: 5px solid qlineargradient(x0:0, x1:1,stop: 0 #ececef, stop: 1 white);
+ border-bottom: 5px solid qlineargradient(y0:0, y1:1,stop: 0 white, stop: 1  #ececef);
+border-right: 5px solid qlineargradient(x0:0, x1:1,stop:  0 white, stop: 1 #ececef);
+background-color: rgb(255,255,255);
+}
+</string>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,6,1,6">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,4,4">
+         <item>
+          <widget class="QCheckBox" name="set_views">
+           <property name="text">
+            <string>Top</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="set_points_map">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+           </property>
+           <property name="text">
+            <string>加载点云地图文件</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>:/images/classes/SetGoal.png</normaloff>:/images/classes/SetGoal.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="set_vector_map">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+           </property>
+           <property name="text">
+            <string>加载高精地图文件</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>:/images/classes/SetGoal.png</normaloff>:/images/classes/SetGoal.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>坐标列表</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="set_goal_btn_2">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>增加坐标点</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>:/images/classes/SetGoal.png</normaloff>:/images/classes/SetGoal.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tableWidget"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="push_read_list">
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>加载坐标文件</string>
+             </property>
+             <property name="icon">
+              <iconset theme="://images/mutil_pose.png">
+               <normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</iconset>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="push_save_list">
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>保存坐标列表</string>
+             </property>
+             <property name="icon">
+              <iconset theme="://images/mutil_pose.png">
+               <normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="text">
+              <string>停站顺序</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushAdd_site">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>增加站点</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>:/images/classes/SetInitialPose.png</normaloff>:/images/classes/SetInitialPose.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tableWidget_2"/>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="push_read_list_2">
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);
+border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>加载线路文件</string>
+             </property>
+             <property name="icon">
+              <iconset theme="://images/mutil_pose.png">
+               <normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="push_save_list_2">
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>保存线路列表</string>
+             </property>
+             <property name="icon">
+              <iconset theme="://images/mutil_pose.png">
+               <normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</normaloff>../../../../桌面/ui_ws/src/Ros_Qt5_Gui_App/ui</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_site">
+             <property name="styleSheet">
+              <string notr="true">QPushButton:hover{
+background-color:rgb(186, 189, 182);
+border-bottom:2px solid rgb(67, 154, 246);
+}
+QPushButton:checked{
+background-color:cyan;
+border-bottom:2px solid white 
+}
+QPushButton:pressed{
+background-color:rgb(67, 154, 246)
+}
+QPushButton{
+background-color:rgb(238, 238, 236);border:2px solid rgb(205, 197, 191);
+padding:0px 0px 0px 0px;
+margin:0px 0px 0px 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>发布站点</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,39 @@
+<launch>
+	<arg name="car_length" default="1.9"/>								
+	<arg name="car_width" default="0.85"/>	
+	<arg name="car_hight" default="1.15" /> 							
+	<arg name="lidar_front_dis" default="0.8"/>	 
+	<arg name="front_stop_distance" default="1.0" />
+	<arg name="edge_stop_distance" default="0.1"/>
+	<arg name="back_stop_distance" default="0.1"/>
+
+    <node pkg="lidar_obstacle_detection" name="lidar_obstacle_detect" type="environment"  output="screen">
+        <remap from="lslidar_point_cloud" to="points_raw" />
+
+        <param name="frame_id" type="string" value="velodyne" />
+
+        <!--车体长度-->
+        <param name="car_length" type="double" value="$(arg car_length)" />
+        <!--车体宽度-->
+        <param name="car_width" type="double" value="$(arg car_width)" />
+        <!--车体高度(激光雷达的高度)-->
+        <param name="car_hight" type="double" value="$(arg car_hight)" />
+        <!--激光雷达到车头的位置-->
+        <param name="lidar_front_dis" type="double" value="$(arg lidar_front_dis)" />
+
+        <!--前方障碍物停止距离-->
+        <param name="front_stop_distance" type="double" value="$(arg front_stop_distance)" />
+        <!--侧方障碍物停止距离-->
+        <param name="edge_stop_distance" type="double" value="$(arg edge_stop_distance)" />
+        <!--后方障碍物停止距离-->
+        <param name="back_stop_distance" type="double" value="$(arg back_stop_distance)" />
+
+    </node>
+    
+	<!-- <node pkg="lidar_obstacle_detection" name="lidar_fusion" type="lidar_fusion"  output="screen" /> -->
+
+	<!-- 后轴执行到激光雷达的位置 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="lidar_link" args="0 0 1.81 0 0 0 base_link velodyne 10" /> -->
+
+	<!-- <include file="$(find dynamic_tutorials)/launch/dynamic_tutorials.launch"/> -->
+</launch>

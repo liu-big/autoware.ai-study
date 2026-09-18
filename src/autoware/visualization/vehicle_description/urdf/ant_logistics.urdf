@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="myurdf_logistics1">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.5741 -0.010447 0.29985"
+        rpy="0 0 0" />
+      <mass
+        value="88.87" />
+      <inertia
+        ixx="5.2086"
+        ixy="0.19243"
+        ixz="0.044555"
+        iyy="8.6891"
+        iyz="-0.057075"
+        izz="10.929" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/ant_logistics.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.59216 0.66667 0.68235 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vehicle_description/mesh/ant_logistics.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

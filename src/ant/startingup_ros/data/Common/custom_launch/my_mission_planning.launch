@@ -1,0 +1,135 @@
+<launch>
+	<arg name="maxLocalPlanDistance" default="40"/>     <!-- 局部规划最大距离-->
+	<arg name="minFollowingDistance" default="25"/>       <!-- 多远检测障碍物(应该大于跟随距离) -->
+	<arg name="minDistanceToAvoid" default="15"/>          <!-- 检测到障碍物多远开始绕行(应该小于 minFollowingDistance 并且大于 maxDistanceToAvoid) -->
+	<arg name="maxDistanceToAvoid" default="6"/>			  <!-- 车子开始启动的最小距离(应该小于 minDistanceToAvoid )-->
+    <arg name="rollOutsNumber" default="6"/>                <!-- 局部规划线数量-->
+	<arg name="horizontalSafetyDistance"   default="1" />  						<!-- 左右安全距离 -->
+	<arg name="verticalSafetyDistance"     default="2" />								<!-- 前后安全距离 -->
+	<arg name="maxVelocity" default="3.0"/>                       <!-- 最大速度 m/s -->
+	<arg name="minVelocity"         default="0.1" />  			<!-- 最小速度-->
+	<arg name="maxAcceleration" default="3"/>                 <!-- 最大加速度 -->
+	<arg name="maxDeceleration" default="-3"/>				<!-- 最大减速度 -->
+
+	<arg name="width"           default="1.85"  />										    <!-- 车辆宽度 -->
+	<arg name="length"           default="4.2"  />											 <!-- 车辆长度 -->
+	<arg name="wheelBaseLength"       default="2.7"  />                        <!-- 轴距 -->
+	<arg name="turningRadius"        default="5.2"  />								<!-- 最小转为半径 -->
+	<arg name="maxSteerAngle"       default="0.488" />							 <!-- 最大转角 -->
+    <arg name="site_file_path" default="$(find startingup_ros)/data/Common/map/site/$(env AUTOCAR_MAP_SITE_TYPE)" />
+
+	<arg name="enableLaneChange" default="false"/>
+	<arg name="enableReplan" default="true"/>
+	<arg name="enableSmoothing" default="True"/>
+	<arg name="enableRvizInput" default="True"/>
+	<arg name="onlyReplan" default="True" />
+	<arg name="pathDensity" default="1"/>								<!-- 每两个航点之间的距离-->
+
+	<include file="$(find autoware_connector)/launch/vel_pose_connect.launch">
+		<arg name="topic_pose_stamped" value="/ndt_pose"/>
+		<arg name="topic_twist_stamped" value="/estimate_twist"/>
+		<arg name="sim_mode" value="False"/>
+	</include>
+
+	<include file="$(find op_global_planner)/launch/op_global_planner.launch">
+		<arg name="enableLaneChange" value="$(arg enableLaneChange)"/>
+		<arg name="enableReplan" value="$(arg enableReplan)"/>
+		<arg name="enableSmoothing" value="$(arg enableSmoothing)"/>
+		<arg name="enableRvizInput" value="$(arg enableRvizInput)"/>
+		<arg name="onlyReplan" value="$(arg onlyReplan)" />
+		<arg name="pathDensity" value="$(arg pathDensity)"/>								<!-- 每两个航点之间的距离-->
+		<arg name="velocitySource" value="1"/>                      <!-- 从 (0- Odometry, 1- autoware current_velocities, 2- car_info) 读取速度 "" -->
+		<arg name="mapSource"             value="0" /> 				   <!-- Autoware=0，矢量地图文件夹=1，kml 文件=2(相当打点) -->  
+		<arg name="mapFileName"           value="" />				 <!-- kml地图源的情况(gnss 打点文件) -->
+		<arg name="enableDynamicMapUpdate"       value="false" />
+		<arg name="lowBatteryThreshold"       value="10" />
+	</include>
+
+
+	<include file="$(find op_local_planner)/launch/op_common_params.launch">
+		<arg name="mapSource"         value="0" />						<!-- kml地图源的情况(gnss 打点文件) -->
+		<arg name="mapFileName"       value="" />
+
+		<arg name="pathDensity" value="0.5"/>
+		<arg name="rollOutDensity" value="1.5"/>
+		<arg name="rollOutsNumber" value="$(arg rollOutsNumber)"/>                <!-- 局部规划先数量-->
+
+		<arg name="velocitySource" value="1"/>												<!-- 从 (0- Odometry, 1- autoware current_velocities, 2- car_info) 读取速度 "" -->
+		<arg name="maxVelocity" value="$(arg maxVelocity)"/>                       <!-- 最大速度-->
+		<arg name="minVelocity"         value="$(arg minVelocity)" />  			<!-- 最小速度-->
+		<arg name="maxAcceleration" value="$(arg maxAcceleration)"/>                 <!-- 最大加速度 -->
+		<arg name="maxDeceleration" value="$(arg maxDeceleration)"/>				<!-- 最大减速度 -->
+		<arg name="speedProfileFactor"    value="1.2"  />     <!-- 速度分布因子 -->
+
+		<arg name="maxLocalPlanDistance" value="$(arg maxLocalPlanDistance)"/>     <!-- 局部规划最大距离-->
+		<arg name="horizonDistance" value="120"/>                 <!-- 地平线距离 -->
+
+
+
+		<arg name="minFollowingDistance" value="$(arg minFollowingDistance)"/>       <!-- 多远检测障碍物(应该大于跟随距离) -->
+		<arg name="minDistanceToAvoid" value="$(arg minDistanceToAvoid)"/>          <!-- 检测到障碍物多远开始绕行(应该小于 minFollowingDistance 并且大于 maxDistanceToAvoid) -->
+		<arg name="maxDistanceToAvoid" value="$(arg maxDistanceToAvoid)"/>			  <!-- 车子开始启动的最小距离(应该小于 minDistanceToAvoid )-->
+		<arg name="horizontalSafetyDistance" value="$(arg horizontalSafetyDistance)"/>      <!-- 左右安全距离 -->
+		<arg name="verticalSafetyDistance" value="$(arg verticalSafetyDistance)"/>			<!-- 前后安全距离 -->
+
+		<arg name="smoothingDataWeight"      value="0.45"  />			<!-- 平滑数据权重 -->
+		<arg name="smoothingSmoothWeight"    value="0.35"  />  		 <!-- 平滑权重 -->
+
+		<arg name="enableFollowing" value="True"/>									<!-- 使能跟车-->>
+		<arg name="enableSwerving" value="True"/>									<!-- 使能转向-->>
+		<arg name="enableStopSignBehavior" value="True"/>                 <!-- 启用停止标志行为 -->
+		<arg name="enableTrafficLightBehavior" value="False"/> 			 <!-- 启用交通灯行为 -->
+		<arg name="enableLaneChange" value="True"/>								<!-- 启用车道变更 -->
+
+		<arg name="width"           value="$(arg width)"  />										    <!-- 车辆宽度 -->
+		<arg name="length"           value="$(arg length)"  />											 <!-- 车辆长度 -->
+		<arg name="wheelBaseLength"       value="$(arg wheelBaseLength)"  />                        <!-- 轴距 -->
+		<arg name="turningRadius"        value="$(arg turningRadius)"  />								<!-- 最小转为半径 -->
+		<arg name="maxSteerAngle"       value="$(arg maxSteerAngle)" />							 <!-- 最大转角 -->
+
+		<arg name="steeringDelay"       value="1.2" />                                   <!-- 转向延迟 -->
+		<arg name="minPursuiteDistance"   value="3.0"  />                       <!-- 最小追踪距离 -->
+		<arg name="additionalBrakingDistance" value="5.0"  />             <!-- 额外刹车距离 -->
+
+		<arg name="giveUpDistance"       value="-4.0"  />								<!-- 放弃距离 -->
+	</include>
+
+
+	<include file="$(find op_local_planner)/launch/op_trajectory_generator.launch">
+		<arg name="samplingTipMargin"     value="4"  />
+		<arg name="samplingOutMargin"     value="12" />
+		<arg name="samplingSpeedFactor"   value="0.25" />    				    <!-- 采样速度因子 -->
+		<arg name="enableHeadingSmoothing"   value="false" />			  <!-- 启用标题平滑 -->
+	</include>
+
+
+	<include file="$(find op_local_planner)/launch/op_motion_predictor.launch">
+		<arg name="max_distance_to_lane" value="2"/>							<!-- 最大距离到车道 -->
+		<arg name="prediction_distance" value="25"/>								<!-- 预测距离 -->
+		<arg name="distanceBetweenCurbs"   value="1.5" />					  <!-- 路缘之间的距离 -->
+		<arg name="visualizationTime"     value="0.25" />                          <!-- 可视化时间-->
+
+		<arg name="enableCurbObstacles" value="True"/>							 <!-- 启用路边障碍物 -->
+		<arg name="enableGenrateBranches" value="False"/>					 <!-- 启用生成分支 -->
+		<arg name="enableStepByStepSignal" value="False"/>                    <!-- 启用步进信号(sim)-->
+		<arg name="enableParticleFilterPrediction" value="False"/>         <!-- 启用粒子过滤器预测 -->
+
+	</include>
+
+
+	<node pkg="waypoint_maker" type="waypoint_marker_publisher" name="waypoint_marker_publisher" /> 
+
+	<include file="$(find op_local_planner)/launch/op_trajectory_evaluator.launch">
+		<arg name="enablePrediction" value="false"/>
+		<arg name="horizontalSafetyDistance"   value="$(arg horizontalSafetyDistance)" />  						<!-- 左右安全距离 -->
+		<arg name="verticalSafetyDistance"     value="$(arg verticalSafetyDistance)" />								<!-- 前后安全距离 -->
+	</include>
+
+	<include file="$(find op_local_planner)/launch/op_behavior_selector.launch">
+		<arg name="evidence_tust_number"   value="25"/>						   <!-- 证据证明编号 -->
+	</include>
+
+    <include file="$(find send_sitedata)/launch/send_sitedata.launch">
+        <arg name="file_path" value="$(arg site_file_path)" />
+    </include>
+</launch>

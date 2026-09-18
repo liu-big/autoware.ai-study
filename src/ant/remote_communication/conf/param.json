@@ -1,0 +1,171 @@
+{
+    "Success": true,
+    "ErrorCode": 0,
+    "Data": {
+        "dateTime": "2022/7/29 18: 12: 30",
+        "locationsNO": "16",
+        "locations": [
+            {
+                "location": "电竞馆西门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "1",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "图书馆东门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "2",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "行政楼北门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "2",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "4号学生公寓",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "3号学生公寓1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "教学楼北门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "5号学生公寓1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "体育场东门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "实训大楼1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "2号学生公寓1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "6号学生公寓1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "中心食堂北门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "学生中心东门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "体育场东看台1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "学生中心西门1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            },
+            {
+                "location": "1号学生公寓1",
+                "orderStatue": [
+                    {
+                        "orderNO": "6",
+                        "orderType": "0"
+                    }
+                ],
+                "outTime": "1"
+            }
+        ]
+    },
+    "Msg": null
+}

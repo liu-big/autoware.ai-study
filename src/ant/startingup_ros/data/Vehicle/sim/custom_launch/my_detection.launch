@@ -1,0 +1,206 @@
+<launch>
+
+	<arg name="use_gpu" default="True"/>
+	<arg name="cluster_size_min" default="7"/>												<!-- 认为一个集群有效的最小点数-->
+	<arg name="cluster_size_max" default="20000"/>									  <!-- 认为一个集群有效的最大点数-->
+	<arg name="lidar_back_range" default="-5.0" /> <!-- lidar到车后方的有效距离，为了去除车后方的点 -->
+    <arg name="lidar_total_range" default="150.0" /> <!-- lidar的有效探测范围 -->
+
+	<arg name="vehicle_width" default="1.85" />           <!-- 车辆宽度 -->
+	<arg name="vehicle_length" default="4.2" />  			 <!-- 车辆长度 -->
+	<arg name="vector_map_filter_distance" default="0"/>          <!-- set 0 to disable vector map filtering  -->
+
+	<arg name="clipping_height" default="2"/>											<!-- 删除高于此高度值的点（默认 2.0 米）--> 
+	<arg name="min_point_distance" default="1.85"/>							<!-- 移除距离传感器原点比这个距离更近的点（默认 1.85 米）--> 
+
+    <arg name="lidar_front_car_range" default="1.90" /> <!-- lidar到车前方的距离，为了去除扫描到车身上的点 -->
+    <arg name="lidar_back_car_range" default="1.90" /> <!-- lidar到车后方的距离，为了去除扫描到车身上的点 -->
+    <arg name="lidar_left_car_range" default="0.90" /> <!-- lidar到车左侧的距离，为了去除扫描到车身上的点 -->
+    <arg name="lidar_right_car_range" default="0.90" /> <!-- lidar到车右侧的距离，为了去除扫描到车身上的点 -->
+
+	<arg name="front_safe_distance" default="1.0" /><!--前方障碍物最小安全距离-->
+	<arg name="lear_safe_distance" default="0.75" /><!--后方障碍物最小安全距离-->
+	<arg name="left_safe_distance" default="0.22" /><!--左方障碍物最小安全距离-->
+	<arg name="right_safe_distance" default="0.22" /><!--右方障碍物最小安全距离-->
+
+    <arg name="front_velocity_coefficient" default="1.8" /><!--前方障碍物安全速度系数-->
+    <arg name="lear_velocity_coefficient" default="1.5" /><!--后方障碍物安全速度系数-->
+    <arg name="left_velocity_coefficient" default="1.0" /><!--左方障碍物安全速度系数-->
+    <arg name="right_velocity_coefficient" default="1.0" /><!--右方障碍物安全速度系数-->
+
+
+    <param name="vehicle_is_sim" value="True" /><!--左方障碍物安全速度系数-->
+    <param name="traffic_light_pose" value="0" /><!--0: 识别中间的红绿灯, 1: 识别2边的红绿灯-->
+
+	<!-- calibration_publisher -->
+	<include file="$(find runtime_manager)/launch_files/calibration_publisher.launch">
+		<arg name="file" value="$(find startingup_ros)/data/Common/calibration/autoware_camera_lidar_calibration.yaml" />
+		<arg name="register_lidar2camera_tf" value="true" />
+		<arg name="publish_extrinsic_mat" value="true" />
+		<arg name="publish_camera_info" value="true" />
+		<arg name="camera_id" value="/"/>
+		<arg name="target_frame" value="velodyne"/>
+		<arg name="camera_frame" value="camera"/>
+		<arg name="image_topic_src" value="/image_raw"/>
+		<arg name="camera_info_topic" value="/camera_info"/>
+		<arg name="projection_matrix_topic" value="/projection_matrix"/>
+	</include>
+
+	<!-- points2image -->
+	<include file="$(find runtime_manager)/launch_files/points2image.launch">
+			<arg name="camera_id" value="/"/>
+			<arg name="camera_info_src" value="/camera_info"/>
+			<arg name="projection_matrix_src" value="/projection_matrix"/>
+			<arg name="sync" value="false" />
+	</include>
+
+	<!-- <include file="$(find pixel_cloud_fusion)/launch/pixel_cloud_fusion.launch">
+		<param name="points_src" value="/points_raw" />
+		<param name="image_src" value="/image_raw" />
+		<param name="camera_info_src" value="/camera_info" />
+	</include> -->
+
+	<!-- feat_proj -->
+	<include file="$(find trafficlight_recognizer)/launch/feat_proj_option.launch">
+		<arg name="camera_id" value="/"/>
+		<arg name="camera_info_src" value="/camera_info"/>
+		<arg name="use_path_info" value="true"/> <!--使用 VectorMap Server 只发布当前车道上的交通信号-->
+		<arg name="use_ll2" value="false"/>
+	</include>
+
+	<!-- region_tlr -->
+	<include file="$(find trafficlight_recognizer)/launch/traffic_light_recognition.launch">
+		<arg name="camera_id" value="/"/>
+		<arg name="image_src" value="/image_raw"/>
+		<arg name="light_src" value="/light_color" />
+		<arg name="camera_light_src" value="/camera_light_color" />
+		<arg name="ams_light_src" value="/ams_light_color" />
+	</include>
+
+	<!--yolo3 -->
+	<include file="$(find vision_darknet_detect)/launch/vision_yolo3_detect.launch" >
+		<arg name="score_threshold" value="0.35"/>      <!--0.3-->
+		<arg name="nms_threshold" value="0.45"/>	  <!--0.3-->
+		<arg name="image_src" value="/image_raw"/>
+		<arg name="network_definition_file" value="$(find vision_darknet_detect)/darknet/cfg/yolov3.cfg"/>
+		<arg name="pretrained_model_file" value="$(find vision_darknet_detect)/darknet/data/yolov3.weights"/>
+		<arg name="names_file" value="$(find vision_darknet_detect)/darknet/cfg/coco.names"/>
+		<arg name="gpu_device_id" value="0"/>
+		<arg name="camera_id" value=""/>
+	</include>
+
+	<node pkg="vision_lane_detect" type="vision_lane_detect" name="vision_lane_detect"/> 
+	
+	<include file="$(find points_preprocessor)/launch/ray_ground_filter.launch">
+	    <!--arg name="node_name" value="ray_ground_filter"/-->
+	    <arg name="input_point_topic" value="/points_raw"/> 			<!-- 输入点主题，将在该主题的点云上进行地面过滤。 --> 
+	    <arg name="base_frame" value="base_link"/>								  <!-- 坐标系进行变换（默认基础链接）--> 
+	    <arg name="clipping_height" value="$(arg clipping_height)"/>											<!-- 删除高于此高度值的点（默认 2.0 米）--> 
+	    <arg name="min_point_distance" value="$(arg min_point_distance)"/>							<!-- 移除距离传感器原点比这个距离更近的点（默认 1.85 米）--> 
+	    <arg name="radial_divider_angle" value="0.08"/>							 <!-- 每个径向分割在XY平面上的角度（默认0.08度）--> 	
+	    <arg name="concentric_divider_distance" value="0"/>					<!-- XY平面上各同心分度的距离（默认0.0米）--> 
+	    <arg name="local_max_slope" value="8"/>											<!-- 点之间地面的最大坡度（默认 8 度）--> 
+	    <arg name="general_max_slope" value="5"/>									<!-- 整个PointCloud中地面的Max Slope，重分类时使用（默认5度）--> 
+	    <arg name="min_height_threshold" value="0.05"/>						  <!-- 点间最小高度阈值（默认0.05米）--> 
+	    <arg name="reclass_distance_threshold" value="0.2"/>  				<!-- 将发生重新分类的点之间的距离（默认0.2米）--> 		
+		<arg name="no_ground_point_topic" value="/points_no_ground" />
+  		<arg name="ground_point_topic" value="/points_ground" />
+	</include>
+
+    <include file="$(find lidar_obstacle_detection)/launch/safe_range.launch">
+        <!--雷达到车头的距离-->
+        <arg name="lidar_car_front_distance" value="$(arg lidar_front_car_range)" />
+        <!--雷达到车尾的距离-->
+        <arg name="lidar_car_lear_distance" value="$(arg lidar_back_car_range)" />
+        <!--雷达到车左侧的距离-->
+        <arg name="lidar_car_left_distance" value="$(arg lidar_left_car_range)" />
+        <!--雷达到车右侧的距离-->
+        <arg name="lidar_car_right_distance" value="$(arg lidar_right_car_range)" />
+
+		<!--前方障碍物最小安全距离-->
+		<arg name="front_safe_distance" value="$(arg front_safe_distance)" />
+		<!--后方障碍物最小安全距离-->
+        <arg name="lear_safe_distance" value="$(arg lear_safe_distance)" />
+		<!--左方障碍物最小安全距离-->
+        <arg name="left_safe_distance" value="$(arg left_safe_distance)" />
+		<!--右方障碍物最小安全距离-->
+        <arg name="right_safe_distance" value="$(arg right_safe_distance)" />
+
+		<!--前方障碍物安全速度系数-->
+		<arg name="front_velocity_coefficient" value="$(arg front_velocity_coefficient)" />
+		<!--后方障碍物安全速度系数-->
+        <arg name="lear_velocity_coefficient" value="$(arg lear_velocity_coefficient)" />
+		<!--左方障碍物安全速度系数-->
+        <arg name="left_velocity_coefficient" value="$(arg left_velocity_coefficient)" />
+		<!--右方障碍物安全速度系数-->
+        <arg name="right_velocity_coefficient" value="$(arg right_velocity_coefficient)" />
+
+    </include>
+
+	<include file="$(find lidar_euclidean_cluster_detect)/launch/lidar_euclidean_cluster_detect.launch">
+	    <arg name="use_gpu" value="$(arg use_gpu)"/>
+	    <arg name="output_frame" value="map"/>                                                <!-- 输出的集群转换为以该值为原点的坐标系 -->
+	    <arg name="pose_estimation" value="True"/>
+	    <arg name="downsample_cloud" value="True"/>                                   <!-- 使用“leaf_size”给定的值应用VoxelGrid过滤器-->
+	    <arg name="points_node" value="/points_no_ground"/>
+	    <arg name="leaf_size" value="0.1"/>																 <!-- Voxel Grid Filter 下采样叶子尺寸-->
+	    <arg name="cluster_size_min" value="$(arg cluster_size_min)"/>												<!-- 认为一个集群有效的最小点数-->
+	    <arg name="cluster_size_max" value="$(arg cluster_size_max)"/>									  <!-- 认为一个集群有效的最大点数-->
+	    <arg name="clustering_distance" value="0.75"/>										<!-- 认为一个集群最大关系距离-->
+	    <arg name="clip_min_height" value="-2.1"/>                                              <!-- 最低有效高度-->
+	    <arg name="clip_max_height" value="0.5"/>												<!-- 最高有效高度-->
+	    <arg name="use_vector_map" value="False"/>
+	    <!-- <arg name="vectormap_frame" value="map"/> -->
+	    <!-- <arg name="wayarea_gridmap_topic" value="grid_map_wayarea"/> -->
+	    <arg name="wayarea_gridmap_layer" value="wayarea"/>
+	    <!-- <arg name="wayarea_no_road_value" value="255"/> -->
+	    <arg name="remove_points_upto" value="0"/>
+	    <arg name="keep_lanes" value="False"/>                                                        <!-- 为true时只识别车道内的集群-->
+	    <arg name="keep_lane_left_distance" value="5"/>
+	    <arg name="keep_lane_right_distance" value="5"/>
+	    <arg name="cluster_merge_threshold" value="1.5"/>
+	    <arg name="use_multiple_thres" value="False"/>
+		<arg name="clustering_ranges" value="[15,30,45,60]"/>							   <!-- 到线段点云的距离 -->
+		<arg name="clustering_distances" value="[0.5,1.1,1.6,2.1,2.6]"/>            <!-- 每个段的欧几里得聚类阈值距离 -->
+	    <arg name="remove_ground" value="False"/>
+	    <arg name="use_diffnormals" value="False"/>
+	    <!-- <arg name="publish_filtered" value="False"/> -->
+
+        <arg name="lidar_front_car_range" value="$(arg lidar_front_car_range)" />
+        <arg name="lidar_back_car_range" value="$(arg lidar_back_car_range)" />
+        <arg name="lidar_left_car_range" value="$(arg lidar_left_car_range)" />
+        <arg name="lidar_right_car_range" value="$(arg lidar_right_car_range)" />
+        <arg name="lidar_back_range" value="$(arg lidar_back_range)" />
+        <arg name="lidar_total_range" value="$(arg lidar_total_range)" />
+	</include>
+
+    <!-- <include file="$(find op_simulation_package)/launch/op_perception_simulator.launch" >
+        <arg name="simObjNumber" value="3" />
+    </include> -->
+
+	<include file="$(find lidar_kf_contour_track)/launch/lidar_kf_contour_track.launch">
+		<arg name="vehicle_width" value="$(arg vehicle_width)" />           <!-- 车辆宽度 -->
+		<arg name="vehicle_length" value="$(arg vehicle_length)" />  			 <!-- 车辆长度 -->
+	    <arg name="tracking_type" value="1"/>                   <!-- 0 仅用于关联，1 用于简单 kf 跟踪，2 用于智能轮廓跟踪器 -->
+	    <arg name="min_object_size" value="0.1"/>
+	    <arg name="max_object_size" value="10"/>
+	    <arg name="vector_map_filter_distance" value="$(arg vector_map_filter_distance)"/>          <!-- set 0 to disable vector map filtering  -->
+	    <arg name="enableLogging" value="False"/>
+	    <arg name="polygon_quarters" value="8"/>
+	    <arg name="polygon_resolution" value="0.5"/>
+	    <arg name="max_association_distance" value="3"/>              <!-- 最大关联距离 -->
+	    <arg name="max_association_size_diff" value="2.5"/>
+	    <arg name="max_remeber_time" value="3"/>
+	    <arg name="trust_counter" value="5"/>
+	    <arg name="enableSimulationMode" value="False"/>
+	    <arg name="enableStepByStepMode" value="False"/>
+	</include>
+		
+	<!-- <include file="$(find range_vision_fusion)/launch/range_vision_fusion.launch">
+		<arg name="detected_objects_range" value="/detection/image_detector/objects"/>
+		<arg name="camera_info_src" value="/camera_info"/>
+		<arg name="sync_topics" value="False"/>
+		<arg name="use_vector_map" value="True"/>
+	</include> -->
+
+</launch>

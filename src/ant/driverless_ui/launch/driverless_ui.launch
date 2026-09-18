@@ -1,0 +1,9 @@
+<!---->
+<launch>
+    <arg name="use_developer" default="false" /><!--开发工具-->>
+
+    <node pkg="driverless_ui" type="driverless_ui_node" name="driverless_ui_node" output="screen">
+        <param name="use_developer" value="$(arg use_developer)" />
+    </node>
+
+</launch>

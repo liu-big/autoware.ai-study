@@ -1,0 +1,30 @@
+<launch>
+    <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/>
+	<include file="$(find twist_filter)/launch/twist_filter.launch">
+		<!-- For twist_filter -->
+		<arg name="lateral_accel_limit" value="5.0" />		
+		<arg name="lateral_jerk_limit" value="5.0" />		
+		<arg name="lowpass_gain_linear_x" value="0.0" />	
+		<arg name="lowpass_gain_angular_z" value="0.0" />	
+		<arg name="lowpass_gain_steering_angle" value="0.0" />	
+
+		<!-- For twist_gate -->
+		<arg name="loop_rate" value="30.0" />
+		<arg name="use_decision_maker" value="false" />	
+	</include>
+
+	<node pkg="lane_follow" type="main" name="lane_follow" output="screen">
+        <param name="img_compress" value="0.5"/>	<!-- 原图像缩放倍数 -->	
+        <param name="h_size" value="80"/>		<!-- 0~100 百分比(截取宽度) -->	
+        <param name="h_off" value="-10"/>			<!-- -100~100 百分比(摄像头安装位置偏向调整) -->	
+        <param name="h_top" value="25"/>			<!-- 0~100  百分比  (顶端宽度) -->	
+        <param name="v_size" value="45"/>		<!-- 0~100 百分比(截取高度) -->	
+        <param name="v_off" value="26"/>			<!-- 百分比(去除车头图像) -->	
+        <param name="speed" value="1"/>			<!-- # 0~5 速度值 -->	
+        <param name="gray_threshold" value="160"/>	<!-- # 0~255 百分比(灰度阀值) -->	
+        <param name="hls_val" value="160"/>			<!-- 百分比(去除车头图像) -->	
+	</node>
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lane_follow)/rviz/lane_follow.rviz"/>
+
+</launch>

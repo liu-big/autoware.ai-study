@@ -1,0 +1,24 @@
+<launch>
+	<arg name="path_pcd" default="$(find startingup_ros)/data/Map/$(env AUTOCAR_MAP_TYPE)/map/pointcloud_map/"/>
+	<arg name="map_dir" default="$(find startingup_ros)/data/Map/$(env AUTOCAR_MAP_TYPE)/map/vector_map/"/>
+
+  	<!-- TF -->
+	<include file="$(find startingup_ros)/data/Common/tf/world_tf.launch"/>
+	<include file="$(find startingup_ros)/data/Common/tf/sensor_tf.launch"/>
+
+  <include file="$(find vehicle_description)/launch/vehicle_model.launch" />
+
+	<!-- Point Cloud -->
+	<include file="$(find map_file)/launch/points_map_loader.launch">
+	    <arg name="scene_num" value="noupdate"/>
+	    <arg name="path_area_list" value="None"/>
+	    <arg name="path_pcd" value="$(arg path_pcd)"/>
+	</include>
+  
+	<!-- Vector Map -->
+	<node pkg="map_file" type="vector_map_loader" name="vector_map_loader" output="screen">
+		<param name="load_mode" value="directory" />
+		<param name="map_dir" value="$(arg map_dir)" />
+	</node>
+
+</launch>

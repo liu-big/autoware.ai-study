@@ -1,0 +1,76 @@
+<launch>
+    <!--雷达到车头的距离-->
+    <arg name="lidar_car_front_distance" default="1.90" />
+    <!--雷达到车尾的距离-->
+    <arg name="lidar_car_lear_distance" default="-1.20" />
+    <!--雷达到车左侧的距离-->
+    <arg name="lidar_car_left_distance" default="0.90" />
+    <!--雷达到车右侧的距离-->
+    <arg name="lidar_car_right_distance" default="-0.90" />
+
+    
+    <!--前方障碍物最小安全距离-->
+    <arg name="front_safe_distance" default="1.0" />
+    <!--后方障碍物最小安全距离-->
+    <arg name="lear_safe_distance" default="0.75" />
+    <!--左方障碍物最小安全距离-->
+    <arg name="left_safe_distance" default="0.22" />
+    <!--右方障碍物最小安全距离-->
+    <arg name="right_safe_distance" default="0.22" />
+
+
+    <!--前方障碍物安全速度系数-->
+    <arg name="front_velocity_coefficient" default="1.8" />
+    <!--后方障碍物安全速度系数-->
+    <arg name="lear_velocity_coefficient" default="1.5" />
+    <!--左方障碍物安全速度系数-->
+    <arg name="left_velocity_coefficient" default="1.0" />
+    <!--右方障碍物安全速度系数-->
+    <arg name="right_velocity_coefficient" default="1.0" />
+
+    <!--所设值需要比最小安全距离大-->
+    <!--前方障碍物最小减速距离-->
+    <arg name="front_slow_distance" default="4.0" />
+    <!--后方障碍物最小减速距离-->
+    <arg name="lear_slow_distance" default="2.75" />
+    <!--左方障碍物最小减速距离-->
+    <arg name="left_slow_distance" default="1.22" />
+    <!--右方障碍物最小减速距离-->
+    <arg name="right_slow_distance" default="1.22" />
+
+    <!--超声波使能-->
+    <arg name="ultra_enable" default="[true,true,true,true,true,true,true,true]" />
+    <arg name="safe_max_speed_limit" default="10.0" /> <!--km/h-->
+
+    <node pkg="lidar_obstacle_detection" name="safe_range" type="safe_range" output="screen">
+
+        <param name="frame_id" type="string" value="velodyne" />
+
+        <param name="lidar_car_front_distance" type="double" value="$(arg lidar_car_front_distance)" />
+        <param name="lidar_car_lear_distance" type="double" value="$(arg lidar_car_lear_distance)" />
+        <param name="lidar_car_left_distance" type="double" value="$(arg lidar_car_left_distance)" />
+        <param name="lidar_car_right_distance" type="double" value="$(arg lidar_car_right_distance)" />
+
+        <param name="front_safe_distance" type="double" value="$(arg front_safe_distance)" />
+        <param name="lear_safe_distance" type="double" value="$(arg lear_safe_distance)" />
+        <param name="left_safe_distance" type="double" value="$(arg left_safe_distance)" />
+        <param name="right_safe_distance" type="double" value="$(arg right_safe_distance)" />
+
+
+        <param name="front_velocity_coefficient" type="double" value="$(arg front_velocity_coefficient)" />
+        <param name="lear_velocity_coefficient" type="double" value="$(arg lear_velocity_coefficient)" />
+        <param name="left_velocity_coefficient" type="double" value="$(arg left_velocity_coefficient)" />
+        <param name="right_velocity_coefficient" type="double" value="$(arg right_velocity_coefficient)" />
+
+        <param name="front_slow_distance" type="double" value="$(arg front_slow_distance)" />
+        <param name="lear_slow_distance" type="double" value="$(arg lear_slow_distance)" />
+        <param name="left_slow_distance" type="double" value="$(arg left_slow_distance)" />
+        <param name="right_slow_distance" type="double" value="$(arg right_slow_distance)" />
+
+
+        <param name="ultra_enable" value="$(arg ultra_enable)" />
+        <param name="safe_max_speed_limit" value="$(arg safe_max_speed_limit)" />
+
+    </node>
+    
+</launch>

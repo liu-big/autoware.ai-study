@@ -1,0 +1,5 @@
+<launch>
+    <param name="get_gnss_init_pose" value="true"/>
+    
+    <node pkg="gnss_origin_pose" name="subscribe_node" type="subscribe_node"  output="screen" />
+</launch>

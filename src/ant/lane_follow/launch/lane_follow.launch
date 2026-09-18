@@ -1,0 +1,11 @@
+<launch>
+
+	<node pkg="lane_follow" type="main" name="lane_follow" output="screen">
+        <rosparam file="$(find lane_follow)/params/lane_follow.yaml" command="load" />
+        <param name="img_compress" value="0.5"/>	<!-- 原图像缩放倍数 -->	
+        <param name="speed" value="1"/>			<!-- # 0~5 速度值 -->	
+	</node>
+
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lane_follow)/rviz/lane_follow.rviz"/> -->
+
+</launch>

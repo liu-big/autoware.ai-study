@@ -1,0 +1,114 @@
+#! /usr/bin/env python
+
+# encoding=utf8
+import cv2
+import numpy as np
+import rospy
+from sensor_msgs.msg import Image
+from geometry_msgs.msg import TwistStamped
+from cv_bridge import CvBridge, CvBridgeError
+import sys
+from laneDetection import *
+import os
+
+bridge = CvBridge()
+prop = 0
+diff = 0
+integral = 0
+kP = 0.0009
+kD = 0.018
+kI = 0.0000009
+integralActivatingZone = 10
+last_error = 0
+
+img_compress = rospy.get_param('/lane_follow/img_compress', 1.0)
+pub = rospy.Publisher("/twist_raw", TwistStamped)
+img_pub = rospy.Publisher('/image_lane', Image, queue_size=10)
+tot_error = 0
+
+
+def give_steering_angle(error):
+    global kP, kD, kI, last_error, integralActivatingZone, prop, diff, integral, pub, tot_error
+
+    motor_vals = TwistStamped()
+
+    if (error < integralActivatingZone and error != 0):
+        tot_error += error
+    else:
+        tot_error = 0
+
+    if error == 0:
+        diff = 0
+        prop = 0
+
+    prop += error * kP
+    diff += (error - last_error) * kD
+    integral += tot_error * kI
+
+    last_error = error
+
+    steering_val_to_motors = prop + diff + integral
+    motor_vals.linear.x = 0.1
+    motor_vals.linear.y = 0
+    motor_vals.linear.z = 0
+
+    motor_vals.angular.x = 0
+    motor_vals.angular.y = 0
+    motor_vals.angular.z = -steering_val_to_motors
+
+    pub.publish(motor_vals)
+    rospy.sleep(0.005)
+
+pub_count = 0
+def callback(ros_image):
+    global bridge, pub_count
+    try:
+        cv_image = bridge.imgmsg_to_cv2(ros_image, "bgr8")
+    except CvBridgeError as e:
+        print(e)
+
+
+    height, width = cv_image.shape[:2]
+    size = (int(width * img_compress), int(height * img_compress))
+    cv_image = cv2.resize(cv_image, size, interpolation=cv2.INTER_AREA)
+    finalImg, directionDev = loop(cv_image)
+    msg = bridge.cv2_to_imgmsg(finalImg, encoding="bgr8")
+    img_pub.publish(msg)
+    #cv2.imshow("original", finalImg)
+    # cv2.waitKey(3)
+
+    speed_t = rospy.get_param('/lane_follow/speed', 1)  
+    dire = -1 if directionDev < 0 else 1
+    speed = (0 if directionDev == 10001 else speed_t)       
+    steer = (0 if abs(directionDev) < 0.2 else 0.15) * dire
+
+    motor_vals = TwistStamped()
+
+    motor_vals.header.seq = pub_count
+    motor_vals.header.stamp = rospy.Time.now()
+    motor_vals.header.frame_id = "velodyn"
+    pub_count = pub_count + 1
+    motor_vals.twist.linear.x = speed
+    motor_vals.twist.linear.y = 0
+    motor_vals.twist.linear.z = 0
+
+    motor_vals.twist.angular.x = 0
+    motor_vals.twist.angular.y = 0
+    motor_vals.twist.angular.z = steer
+    pub.publish(motor_vals)
+   
+
+def main():
+    rospy.init_node("lane_detection")
+    img_sub = rospy.Subscriber("/image_raw", Image, callback)
+    init_detection()
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        print('ShutDown!...')
+
+    cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+    main()

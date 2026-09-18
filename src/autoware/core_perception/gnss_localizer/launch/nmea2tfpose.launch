@@ -1,0 +1,13 @@
+<!-- -->
+<launch>
+
+  <arg name="plane" default="1"/>
+  <arg name="get_gnss_init_pose" default="false" />
+
+  <node pkg="gnss_localizer" type="nmea2tfpose" name="nmea2tfpose" output="log">
+    <param name="plane" value="$(arg plane)"/>
+    <rosparam file="$(find startingup_ros)/data/Common/param/gnss_init_pose.yaml" command="load" />
+    <param name="get_gnss_init_pose" value="$(arg get_gnss_init_pose)" />
+  </node>
+
+</launch>

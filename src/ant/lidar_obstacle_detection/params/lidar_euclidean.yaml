@@ -1,0 +1,13 @@
+cluster_distance: 0.3
+filterRes: 0.05
+max_points_num: 500
+min_points_num: 3
+recover_default: false
+save_config: false
+x_range: 30.0
+x_stop_range_front: 1.5
+x_stop_range_rear: 1.5
+y_range: 10.0
+y_stop_range: 0.8
+z_range: 1.81
+z_stop_range: 1.81

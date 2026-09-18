@@ -1,0 +1,14 @@
+<launch>
+    <arg name="pose_file" default="$(find remote_communication)/conf/pose.xml" />
+    <arg name="server_url" default="https://www.bjcmxd.cn/POSAPI/updateCarInfoBJCM?" />
+    <arg name="charge_site" default="充电站" />
+    <arg name="end_site" default="终点站" />
+    <arg name="dev_id" default="bjcm001" />
+    <node pkg="remote_communication" name="remote_client" type="client.py" respawn="true"  >
+        <param name="pose_file" value="$(arg pose_file)" />
+        <param name="server_url" value="$(arg server_url)" />
+        <param name="charge_site" value="$(arg charge_site)" />
+        <param name="end_site" value="$(arg end_site)" />
+        <param name="dev_id" value="$(arg dev_id)" />
+    </node>
+</launch>

@@ -1,0 +1,54 @@
+<launch>
+  <arg name="vehicle_car" default="$(env AUTOCAR_VEHICLE_TYPE)" />
+  <arg name="use_bag" default="false"/><!--是否离线使用数据包建图-->
+  <arg name="use_sim" default="true"/><!--是否仿真-->
+  <arg name="use_gps" default="true"/><!--是否使用GPS-->
+  <arg name="filt" default="0.2"/><!--地图降采样-->
+  <arg name="speed" default="2" />    <!--播放速率-->
+
+  <rosparam file="$(find startingup_ros)/data/Common/param/init_param.yaml" command="load" />
+  <param name="use_sim_time" value="false"/>
+
+  <group if="$(arg use_bag)"><!--选择数据包-->
+        <node pkg="rosbag" type="play" name="rosbag_play" args=" -r $(arg speed)
+        $(find startingup_ros)/data/Common/bag/build_pcd_data.bag
+        "
+        />
+  </group>
+
+  <group unless="$(arg use_bag)"><!--选择传感器-->
+    <group if="$(eval vehicle_car == 'sim')">
+      <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing_sim.launch"/>
+    </group>
+    <group if="$(eval vehicle_car == 'carla_sim')">
+      <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/>
+    </group>
+    <!-- <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/> -->
+  </group>
+
+  <!-- nmea2tfpose or fix2tfpose-->
+  <include file="$(find gnss_localizer)/launch/fix2tfpose.launch">
+    <arg name="plane" value="1" />
+    <arg name="get_gnss_init_pose" value="true" />
+  </include>
+
+  <!--lio_sam算法-->
+  <group unless="$(arg use_sim)">
+      <include file="$(find lio_sam_6axis)/launch/run.launch">
+        <arg name="useGPS" default="$(arg use_gps)"/><!--是否使用GPS-->
+        <arg name="filt" value="$(arg filt)"/><!--地图降采样-->
+      </include>
+      <!--imu与GPS的转换 对应华测惯导-->
+      <!--<include file="$(find imu_conversion)/launch/imu_conversion.launch"/>-->
+  </group>
+  <group if="$(arg use_sim)">
+      <include file="$(find lio_sam_6axis)/launch/runsim.launch">
+        <arg name="useGPS" default="$(arg use_gps)"/><!--是否使用GPS-->
+        <arg name="filt" value="$(arg filt)"/><!--地图降采样-->
+      </include>
+  </group>
+
+  <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find startingup_ros)/data/Common/rviz/build_map.rviz"/> -->
+
+
+</launch>

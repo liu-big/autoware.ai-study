@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: autoware_launcher
+Version: 1.12.0
+Summary: The tool for easily launching Autoware
+Author: 
+Maintainer: Isamu Takagi
+Maintainer-email: isamu.takagi@tier4.jp
+License: Apache 2.0

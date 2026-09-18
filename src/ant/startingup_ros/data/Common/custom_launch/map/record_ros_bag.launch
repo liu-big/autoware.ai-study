@@ -1,0 +1,38 @@
+<launch>
+  <arg name="vehicle_car" default="$(env AUTOCAR_VEHICLE_TYPE)" />
+  <arg name="topic1" default="/points_raw"/>
+  <arg name="topic2" default="/imu_raw"/>
+  <arg name="topic3" default="/nmea_sentence"/>
+  <arg name="topic4" default="/can_box_raw"/>
+  <arg name="topic5" default="/fix"/>
+  <arg name="topic6" default="/image_raw"/>
+  <arg name="topic7" default="/can_info"/>
+  <arg name="topic8" default="/image_raw/compressed"/>
+
+  <node pkg="rosbag" type="record" name="rosbag_record" args=
+    "
+    -b 0
+    -O $(find startingup_ros)/data/Common/bag/build_pcd_data
+    $(arg topic1)
+    $(arg topic2)
+    $(arg topic3)
+    $(arg topic4)
+    $(arg topic5)
+    $(arg topic6)
+    $(arg topic7)
+    $(arg topic8)
+    "
+  />
+<!--
+    /camera_info
+    /image_raw -->
+  <group if="$(eval vehicle_car == 'sim')">
+    <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing_sim.launch"/>
+  </group>
+  <group if="$(eval vehicle_car == 'carla_sim')">
+    <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/>
+  </group>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find startingup_ros)/data/Common/rviz/record_bag.rviz"/>
+
+</launch>

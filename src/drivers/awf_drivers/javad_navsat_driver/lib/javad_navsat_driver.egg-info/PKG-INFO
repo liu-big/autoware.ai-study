@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: javad_navsat_driver
+Version: 1.12.0
+Summary: Package to parse NMEA strings and publish a very simple GPS message. Does not require the GPSD deamon.
+Author: Hiroki Ohta
+Maintainer: Hiroki Ohta
+Maintainer-email: h_ohta@ertl.jp
+License: Apache 2

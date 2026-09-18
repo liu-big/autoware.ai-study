@@ -1,0 +1,8 @@
+README.md
+setup.py
+src/lgsvl_simulator_bridge/__init__.py
+src/lgsvl_simulator_bridge/configurator.py
+src/lgsvl_simulator_bridge.egg-info/PKG-INFO
+src/lgsvl_simulator_bridge.egg-info/SOURCES.txt
+src/lgsvl_simulator_bridge.egg-info/dependency_links.txt
+src/lgsvl_simulator_bridge.egg-info/top_level.txt

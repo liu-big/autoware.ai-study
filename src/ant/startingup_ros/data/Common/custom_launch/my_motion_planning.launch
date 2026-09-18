@@ -1,0 +1,13 @@
+<launch>
+
+	<arg name="lookahead_ratio" default="2.0"/>                                         <!-- 转为半径 (Waypoint)-->
+    <arg name="minimum_lookahead_distance" default="6.0"/>
+
+	<include file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/pure_pursuit.launch" >
+		<arg name="lookahead_ratio" value="$(arg lookahead_ratio)"/>                                         <!-- 转为半径 (Waypoint)-->
+		<arg name="minimum_lookahead_distance" value="$(arg minimum_lookahead_distance)"/>           <!-- 前视距离 (Waypoint) +速度 -->
+	</include>
+
+
+
+</launch>

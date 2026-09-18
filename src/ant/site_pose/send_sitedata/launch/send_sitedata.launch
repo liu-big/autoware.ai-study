@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="file_path" default="" />
+
+    <node pkg="send_sitedata" type="send_sitedata_node" name="send_sitedata_node" output="screen">
+        <param name="file_path" value="$(arg file_path)"/>
+        <!-- <param name="load_trigger_distance" value="100.0"/> -->
+    </node>
+</launch>

@@ -1,0 +1,175 @@
+<launch>
+  <arg name="vehicle_car" default="$(env AUTOCAR_VEHICLE_TYPE)" />s
+  <arg name="vehicle_name" default="$(env AUTOCAR_VEHICLE_TYPE)" />
+
+  <arg name="init_pos_gnss" default="1" />   <!--初始化gnss位置-->
+  <arg name="use_gnss" default="1" /><!--是否使用GNSS-->
+
+
+  <include file="$(find startingup_ros)/data/Common/tf/world_tf.launch" />
+  <include file="$(find startingup_ros)/data/Common/tf/sensor_tf.launch" />
+  <include file="$(find vehicle_description)/launch/vehicle_model.launch" />
+
+  <!-- Point Cloud -->
+  <include file="$(find map_file)/launch/points_map_loader.launch">
+    <arg name="path_pcd" value="$(find startingup_ros)/data/Map/$(env AUTOCAR_MAP_TYPE)/map/pointcloud_map/" />
+  </include>
+  <!-- <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch" /> -->
+  <group if="$(eval vehicle_car == 'sim')">
+    <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing_sim.launch"/>
+  </group>
+  <group if="$(eval vehicle_car == 'carla_sim')">
+    <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/>
+  </group>
+
+  <include file="$(find startingup_ros)/data/Common/custom_launch/my_localization.launch">
+    <arg name="init_pos_gnss" value="$(arg init_pos_gnss)" />   <!--初始化gnss位置-->
+    <arg name="use_gnss" value="$(arg use_gnss)" /><!--是否使用GNSS-->
+  </include>
+
+
+  <include file="$(find autoware_connector)/launch/vel_pose_connect.launch">
+    <arg name="topic_pose_stamped" value="/ndt_pose" />
+    <arg name="topic_twist_stamped" value="/estimate_twist" />
+    <arg name="sim_mode" value="False" />
+  </include>
+
+  <!-- 读取寻迹点 -->
+  <include
+    file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/waypoint_loader.launch" />
+    <include
+    file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/lane_rule_option.launch" />
+  <include file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/lane_select.launch" />
+  <include
+    file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/velocity_set_option.launch" />
+
+  <include file="$(find waypoint_planner)/launch/astar_avoid.launch">
+    <arg name="enable_avoidance" value="False" />
+    <arg name="avoid_waypoints_velocity" value="10" />
+    <arg name="avoid_start_velocity" value="3" />
+    <arg name="replan_interval" value="2" />
+    <arg name="costmap_topic" value="semantics/costmap_generator/occupancy_grid" />
+  </include>
+
+  <!--yolo3 -->
+  <include file="$(find vision_darknet_detect)/launch/vision_yolo3_detect.launch">
+    <arg name="score_threshold" value="0.5" />
+    <arg name="nms_threshold" value="0.45" />
+    <arg name="image_src" value="/image_raw" />
+    <arg name="network_definition_file" value="$(find vision_darknet_detect)/darknet/cfg/yolov3.cfg" />
+    <arg name="pretrained_model_file"
+      value="$(find vision_darknet_detect)/darknet/data/yolov3.weights" />
+    <arg name="names_file" value="$(find vision_darknet_detect)/darknet/cfg/coco.names" />
+    <arg name="gpu_device_id" value="0" />
+    <arg name="camera_id" value="" />
+  </include>
+
+  <param name="scene_indoor" value="true" />
+  <!-- pure_pursuit -->
+  <include file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/pure_pursuit.launch" />
+
+  <!-- twist_filter -->
+  <!-- <include file="$(find twist_filter)/launch/twist_filter.launch">
+    <arg name="use_sensor_data_filter" value="false" />
+  </include> -->
+
+  <node pkg="rviz" type="rviz" name="rviz"
+    args="-d $(find startingup_ros)/data/Common/rviz/load_points.rviz" />
+
+
+  <group if="$(eval vehicle_name == 'ant_zy_t_01')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="2.2" />
+      <arg name="car_width" value="1.3" />
+      <arg name="car_hight" value="1.55" />
+      <arg name="front_stop_distance" value="1.0" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'ant_zy_t_02')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="2.2" />
+      <arg name="car_width" value="1.3" />
+      <arg name="car_hight" value="1.55" />
+      <arg name="front_stop_distance" value="1.5" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'zhongyun')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="3.1" />
+      <arg name="car_width" value="1.8" />
+      <arg name="car_hight" value="1.85" />
+      <arg name="front_stop_distance" value="1.0" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'yuhesen')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="1.6" />
+      <arg name="car_width" value="0.8" />
+      <arg name="car_hight" value="1.3" />
+      <arg name="front_stop_distance" value="1.0" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'wuling')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="2.2" />
+      <arg name="car_width" value="1.1" />
+      <arg name="car_hight" value="1.68" />
+      <arg name="front_stop_distance" value="1.0" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'fantai')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="2.2" />
+      <arg name="car_width" value="1.1" />
+      <arg name="car_hight" value="1.68" />
+      <arg name="front_stop_distance" value="1.0" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'sim')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="3.2" />
+      <arg name="car_width" value="2.3" />
+      <arg name="car_hight" value="1.85" />
+      <arg name="front_stop_distance" value="1.5" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'carla_sim')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="3.2" />
+      <arg name="car_width" value="2.3" />
+      <arg name="car_hight" value="1.85" />
+      <arg name="front_stop_distance" value="4.186" />
+      <arg name="edge_stop_distance" value="0.2" />
+      <arg name="back_stop_distance" value="0.2" />
+    </include>
+  </group>
+  <group if="$(eval vehicle_name == 'kaiwo')">
+    <include file="$(find lidar_obstacle_detection)/launch/obstacle_detection.launch">
+      <arg name="car_length" value="4.2" />
+      <arg name="car_width" value="2.3" />
+      <arg name="car_hight" value="2.85" />
+      <arg name="front_stop_distance" value="1.5" />
+      <arg name="edge_stop_distance" value="0.1" />
+      <arg name="back_stop_distance" value="0.1" />
+    </include>
+  </group>
+
+  <!--include
+  file="$(find startingup_ros)/launch/auto_mode.launch"/-->
+
+
+</launch>

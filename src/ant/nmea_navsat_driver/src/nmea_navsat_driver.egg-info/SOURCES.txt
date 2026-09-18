@@ -1,0 +1,16 @@
+README.rst
+setup.cfg
+setup.py
+src/libnmea_navsat_driver/__init__.py
+src/libnmea_navsat_driver/checksum_utils.py
+src/libnmea_navsat_driver/driver.py
+src/libnmea_navsat_driver/parser.py
+src/libnmea_navsat_driver/nodes/__init__.py
+src/libnmea_navsat_driver/nodes/nmea_serial_driver.py
+src/libnmea_navsat_driver/nodes/nmea_socket_driver.py
+src/libnmea_navsat_driver/nodes/nmea_topic_driver.py
+src/libnmea_navsat_driver/nodes/nmea_topic_serial_reader.py
+src/nmea_navsat_driver.egg-info/PKG-INFO
+src/nmea_navsat_driver.egg-info/SOURCES.txt
+src/nmea_navsat_driver.egg-info/dependency_links.txt
+src/nmea_navsat_driver.egg-info/top_level.txt

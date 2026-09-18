@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>image/SetGoal.png</file>
+        <file>image/PublishPoint.svg</file>
+        <file>image/Pose.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,9 @@
+<launch>
+  <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge_with_example_ego_vehicle.launch"> <!--仿真转换-->
+      <arg name="town" value='$(env AUTOCAR_MAP_TYPE)'/>
+  </include>
+
+  <include file="$(find carla_conver)/launch/carla_conver.launch"> <!--仿真转换-->
+      <arg name="speed_gain" value="10"/>
+  </include>
+</launch>

@@ -1,0 +1,43 @@
+<launch>
+  <arg name="use_bag" default="false"/><!--是否离线使用数据包建图-->
+  <arg name="use_gpu" default="2" />  <!--2 use gpu-->
+  <arg name="filt" default="0.2" /><!--降采样-->
+  <arg name="speed" default="2" />    <!--播放速率-->
+
+  <rosparam file="$(find startingup_ros)/data/Common/param/init_param.yaml" command="load" />
+
+  <!-- TF /work /map -->
+  <include file="$(find startingup_ros)/data/Common/tf/world_tf.launch"/>
+  <include file="$(find vehicle_description)/launch/vehicle_model.launch" />
+
+  <group if="$(arg use_bag)"><!--选择数据包-->
+        <node pkg="rosbag" type="play" name="rosbag_play" args=" -r $(arg speed)
+        $(find startingup_ros)/data/Common/bag/build_pcd_data.bag
+        "
+        />
+        <param name="use_sim_time" value="true"/>
+  </group>
+
+  <group unless="$(arg use_bag)"><!--选择传感器-->
+        <include file="$(find startingup_ros)/data/Common/custom_launch/my_sensing.launch"/>
+  </group>
+
+  <!--save gnss init pose-->
+  
+  <!-- nmea2tfpose -->
+  <include file="$(find gnss_localizer)/launch/nmea2tfpose.launch">
+    <arg name="plane" value="1" />
+    <arg name="get_gnss_init_pose" value="true" />
+  </include>
+
+  <!-- <include file="$(find gnss_origin_pose)/launch/gnss_trans.launch"/> -->
+  
+  <include file="$(find startingup_ros)/data/Common/custom_launch/encap_launch/ndt_mapping.launch">
+    <arg name="method_type" value="$(arg use_gpu)" />  <!--2 use gpu-->
+    <arg name="filter_res" value="$(arg filt)" />
+  </include>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find startingup_ros)/data/Common/rviz/build_map.rviz"/>
+
+
+</launch>

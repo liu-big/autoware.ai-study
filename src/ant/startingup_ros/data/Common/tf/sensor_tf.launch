@@ -1,0 +1,28 @@
+
+<launch>
+
+    <arg name="x" value="1.2" />
+    <arg name="y" value="0.0" />
+    <arg name="z" value="2.0" />
+    <arg name="yaw" value="0.0" />
+    <arg name="pitch" value="0.0" />
+    <arg name="roll" value="0.0" />
+    <arg name="frame_id" value="/base_link" />
+    <arg name="child_frame_id" value="/velodyne" />
+    <arg name="period_in_ms" value="10" />
+
+    <!-- Setup -->
+    <!-- tf parameters for ndt_matching -->
+    <param name="tf_x" value="$(arg x)" />
+    <param name="tf_y" value="$(arg y)" />
+    <param name="tf_z" value="$(arg z)" />
+    <param name="tf_yaw" value="$(arg yaw)" />
+    <param name="tf_pitch" value="$(arg pitch)" />
+    <param name="tf_roll" value="$(arg roll)" />
+    <param name="localizer" value="velodyne" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_localizer" args="$(arg x) $(arg y) $(arg z) $(arg yaw) $(arg pitch) $(arg roll) $(arg frame_id) $(arg child_frame_id) $(arg period_in_ms)"/>
+
+    <!-- <node pkg="tf"  type="static_transform_publisher" name="base_link_to_camera" args="1.5 -0.15 1.2 0 0 0 /base_link /camera 10" /> -->
+
+</launch>

@@ -1,0 +1,92 @@
+Sensor:
+  navigate:
+    baud: 460800
+Local:
+  gnss:
+    get_gnss_init_pose: 0
+  matching:
+    init_pos_gnss: 1
+    get_height: 0
+    method_type: 0
+    use_imu: 0
+    use_gnss: 1
+Detection:
+  safeRange:
+    lidar_front_car_range: 1.9
+    lidar_back_car_range: -1.9
+    lidar_left_car_range: 0.9
+    lidar_right_car_range: -0.9
+    front_safe_distance: 1
+    lear_safe_distance: 0.75
+    left_safe_distance: 0.22
+    right_safe_distance: 0.22
+    front_velocity_coefficient: 1.8
+    lear_velocity_coefficient: 1.5
+    left_velocity_coefficient: 1
+    right_velocity_coefficient: 1
+  Cluster:
+    use_gpu: true
+    cluster_size_min: 7
+    cluster_size_max: 20000
+    lidar_back_range: -5
+    lidar_total_range: 150
+  Filter:
+    clipping_height: 2
+    min_point_distance: 1.85
+  ContourTrack:
+    vehicle_width: 1.85
+    vehicle_length: 4.2
+    vector_map_filter_distance: 0
+Planning:
+  op_common:
+    maxLocalPlanDistance: 80
+    minFollowingDistance: 40
+    minDistanceToAvoid: 30
+    maxDistanceToAvoid: 6
+    rollOutsNumber: 6
+    horizontalSafetyDistance: 1
+    verticalSafetyDistance: 2
+    maxVelocity: 3
+    minVelocity: 0.1
+    maxAcceleration: 3
+    maxDeceleration: -3
+    width: 1.85
+    length: 4.2
+    wheelBaseLength: 2.7
+    turningRadius: 5.2
+    maxSteerAngle: 0.49
+  op_global:
+    enableLaneChange: false
+    enableReplan: false
+    enableSmoothing: true
+    enableRvizInput: true
+    onlyReplan: true
+    pathDensity: 1
+Control:
+  pursuit:
+    minimum_lookahead_distance: 6.2
+    lookahead_ratio: 2.5
+  twist:
+    wheel_base: 2.76
+    lateral_accel_limit: 4
+    lateral_jerk_limit: 6
+    lowpass_gain_linear_x: 0.01
+    lowpass_gain_angular_z: 0.02
+    lowpass_gain_steering_angle: 0.03
+CanClient:
+  drive:
+    speed_gain: 1
+    stop_brake_increase: 20
+    normal_brake_increase: 2.03
+  ultrasound: ~
+LaneFollow:
+  image:
+    img_compress: 0.5
+    h_size: 80
+    h_off: -10
+    h_top: 25
+    v_size: 45
+    v_off: 26
+    speed: 1
+    gray_threshold: 160
+    hls_val: 160
