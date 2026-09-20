@@ -1,5 +1,4 @@
-# Autoware.ai 实车自动驾驶软件栈（Ant 定制版）
-
+# Autoware.ai 实车自动驾驶软件栈
 > 基于 [Autoware.ai](https://github.com/Autoware-AI/autoware.ai) 的低速自动驾驶完整软件系统。  
 > 在开源 Autoware 之上完成 **传感接入 → SLAM 建图 → NDT 定位 → 感知 → 规划 → 控制 → CAN 线控** 全链路实车闭环。
 
