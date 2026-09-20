@@ -9,7 +9,7 @@
 #   4. 本机可访问 api.github.com（若公司网络拦截，请换网络/关代理后重试）
 
 $ErrorActionPreference = "Stop"
-$RepoName = "autoware.ai-ant"
+$RepoName = "autoware.ai-study"
 $Owner = "liu-big"
 $Email = "2715209705@qq.com"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
